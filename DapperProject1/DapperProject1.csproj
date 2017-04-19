@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\jquery.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\i18n\jsgrid-de.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\i18n\jsgrid-es.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\i18n\jsgrid-fr.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\i18n\jsgrid-he.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\i18n\jsgrid-ja.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\i18n\jsgrid-ka.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\i18n\jsgrid-pl.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\i18n\jsgrid-pt-br.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\i18n\jsgrid-pt.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\i18n\jsgrid-ru.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\i18n\jsgrid-tr.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\i18n\jsgrid-zh-cn.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\i18n\jsgrid-zh-tw.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\jsgrid-theme.css" />
+    <Content Include="wwwroot\jsgrid-1.5.3\jsgrid-theme.min.css" />
+    <Content Include="wwwroot\jsgrid-1.5.3\jsgrid.css" />
+    <Content Include="wwwroot\jsgrid-1.5.3\jsgrid.js" />
+    <Content Include="wwwroot\jsgrid-1.5.3\jsgrid.min.css" />
+    <Content Include="wwwroot\jsgrid-1.5.3\jsgrid.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>

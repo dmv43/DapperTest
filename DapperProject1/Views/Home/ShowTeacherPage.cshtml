@@ -1,0 +1,33 @@
+﻿@model DapperProject1.Models.Teacher
+    @{
+        ViewData["Title"] = "Teacher";
+    }
+    <h3>Teachers</h3>
+    <table class="table-condensed">
+        <tr>
+            <td>FirstName </td>
+            <td>LastName  </td>
+            <td>NumberOfStudents  </td>
+            <td>NumberOfLessons  </td>
+            <td>Description </td>
+            <td>Location  </td>
+            <td>Rating  </td>
+            
+            
+            <td></td>
+        </tr>
+        
+        
+            <tr>
+                <td>@Model.FirstName  </td>
+                <td>@Model.LastName  </td>
+                <td>@Model.NumberOfStudents  </td>
+                <td>@Model.NumberOfLessons  </td>
+                <td>@Model.Rating  </td>
+                <td>@Model.Description  </td>
+                <td>@Model.Location  </td>
+               
+               
+            </tr>
+        
+    </table>
