@@ -6,7 +6,7 @@
 
 
 <script src="~/jquery.js"></script>
-    <h3>Teachers</h3>
+<h3>Teachers</h3>
 <link type="text/css" rel="stylesheet" href="~/jsgrid-1.5.3/jsgrid.min.css" />
 <link type="text/css" rel="stylesheet" href="~/jsgrid-1.5.3/jsgrid-theme.min.css" />
 
@@ -33,7 +33,7 @@
                         dataType: "json"
                     }).done(function (response) {
                         d.resolve(response);
-                        })
+                    })
                         .done(function (response) {
                             console.log(response);
                             d.resolve(response);
@@ -44,14 +44,17 @@
             },
 
             fields: [
-                { name: "url",
+                {
+                    name: "url",
                     itemTemplate: function (value) {
-                        return $("<a>").attr("href", value).text(value);
+                        return $("<a>").attr("href", value).text("Link");
                     }, width: 30, filtering: true
                 },
-                { name: "italkiURL", itemTemplate: function (value) {
-                        return $("<a>").attr("href","https://"+value).text(value);
-                   }, width: 35, filtering: true },
+                {
+                    name: "italkiURL", itemTemplate: function (value) {
+                        return $("<a>").attr("href", "https://" + value).text("Italki Link");
+                    }, width: 35, filtering: true
+                },
                 { name: "firstName", type: "text", width: 20 },
                 { name: "lastName", type: "text", width: 20 },
                 { name: "numberOfStudents", type: "number", width: 25 },
