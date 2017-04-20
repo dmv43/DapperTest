@@ -13,33 +13,37 @@
 <script type="text/javascript" src="~/jsgrid-1.5.3/jsgrid.min.js"></script>
 <div id="jsGrid"></div>
 
-<script>
-    $(function () {
 
+<script>
+
+    $(function () {
+        
         $("#jsGrid").jsGrid({
             height: "auto",
             width: "100%",
-
+            //filtering: true,
             sorting: true,
-            paging: false,
             autoload: true,
+            paging: true,
+            
+            pageSize: 3,
+           
+         //  pageCount: 2,
+           
 
             controller: {
-                loadData: function () {
+                loadData: function (filter) {
                     var d = $.Deferred();
-
+                    console.log(filter.pageSize);
+                    console.log(filter.pageCount);
                     $.ajax({
                         url: "/Home/GetData",
                         dataType: "json"
                     }).done(function (response) {
                         d.resolve(response);
-                    })
-                        .done(function (response) {
-                            console.log(response);
-                            d.resolve(response);
-                        });;
+                    });
 
-                    return d.promise();
+                    return d.promise(filter);
                 }
             },
 

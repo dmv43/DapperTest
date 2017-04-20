@@ -20,6 +20,7 @@ namespace DapperProject1.Controllers
         }
         public IActionResult TeacherGrid()
         {
+
              return View(db.Teachers.ToList());
           //  return View();
         }
@@ -34,16 +35,18 @@ namespace DapperProject1.Controllers
         }
         public JsonResult GetData()
         {
-
-            
-
-            
-            return  Json(
-                db.Teachers.ToList());
-           
+           int pageSize = 2;
+            int pageCount = 1;
+            //  return  Json(db.Teachers.ToList());
+            return Json(GetContext(db, pageSize, pageCount));
         }
-        //---------------------------------------------
-
+        //-----------paging method------------
+        public IEnumerable<Teacher> GetContext(TeacherContext t, int pageSize, int pageCount)
+        {
+            int skipRows = (pageCount - 1) * pageSize;
+            var q = from teach in t.Teachers select teach ;
+            return q.Skip(skipRows).Take(pageSize).ToList();
+        }
         //=============================================
 
 
