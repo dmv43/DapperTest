@@ -45,17 +45,44 @@ namespace DapperProject1.Models
                         },
                         new Teacher
                         {
+                            // TeacherID = 2,
+                            FirstName = "Vova",
+                            LastName = "Zilvova",
+                            NumberOfStudents = 120,
+                            NumberOfLessons = 630,
+                            Description = "bla bla description3",
+                            Rating = 3.9,
+                            Location = "Nowhere",
+                            URL = "/Home/ShowTeacherPage/3",
+                            ItalkiURL = "www.italki.com/teacher/4045562"
+                        },
+                        new Teacher
+                        {
+                            // TeacherID = 2,
+                            FirstName = "Oleksa",
+                            LastName = "Dovbush",
+                            NumberOfStudents = 1110,
+                            NumberOfLessons = 6200,
+                            Description = "bla bla description4",
+                            Rating = 3.9,
+                            Location = "Nowhere",
+                            URL = "/Home/ShowTeacherPage/4",
+                            ItalkiURL = "www.italki.com/teacher/4045562"
+                        },
+                        new Teacher
+                        {
                            // TeacherID = 3,
                             FirstName = "Emma",
                             LastName = "Stone",
                             NumberOfStudents = 430,
                             NumberOfLessons = 1220,
-                            Description = "bla bla description3",
+                            Description = "bla bla description5",
                             Rating = 5.0,
                             Location = "United States",
-                            URL = "/Home/ShowTeacherPage/3",
+                            URL = "/Home/ShowTeacherPage/5",
                             ItalkiURL = "www.italki.com/teacher/1685538"
                         }
+
 
                     );
                     context.SaveChanges();

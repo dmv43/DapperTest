@@ -27,8 +27,8 @@
             paging: true,
             pageLoading: true,
             
-                pageSize: 1,
-              //  pageIndex: 3,
+                pageSize: 2,
+             //  pageIndex: 1,
            
          
            
@@ -38,10 +38,11 @@
                     var d = $.Deferred();
                     console.log(filter.pageSize);
                     console.log(filter.pageIndex);
+                    console.log(filter)
                     $.ajax({
-                        url: "/Home/GetData",
+                        url: "/Home/GetData?pageSize="+ filter.pageSize+" & pageIndex="+filter.pageIndex,
                         dataType: "json",
-                       
+
                         data: filter
                     }).done(function (response) {
                       //  debugger;

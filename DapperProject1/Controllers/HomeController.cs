@@ -35,22 +35,27 @@ namespace DapperProject1.Controllers
             return View(teacher);
         
         }
-        public JsonResult GetData()
+        public  JsonResult GetData(int pageSize, int pageIndex)
         {
            
-            string pageSizeString = Request.Query.FirstOrDefault(p => p.Key == "pageSize").Value;
-            int pageSize = Int32.Parse(pageSizeString);
-            string pageIndexString = Request.Query.FirstOrDefault(p => p.Key == "pageIndex").Value;
-            int pageIndex = Int32.Parse(pageSizeString);
-
+          //  string pageSizeString = Request.Query.FirstOrDefault(p => p.Key == "pageSize").Value;
+         //   int pageSize = Int32.Parse(pageSizeString);
             
-            //return Json(mainData);
-            return Json(new { data = GetContext(db, pageSize, pageIndex),itemsCount = db.Teachers.Count() });
+         //   string pageIndexString = Request.Query.FirstOrDefault(p => p.Key == "pageIndex").Value;
+         //   int pageIndex = Int32.Parse(pageSizeString);
+            
 
+            var adata = new { data = GetContext(db, pageSize, pageIndex), itemsCount = db.Teachers.Count(), pageSize, pageIndex };
+            
+            return Json(adata);
+           // return Json(new { data = GetContext(db, pageSize, pageIndex),itemsCount = db.Teachers.Count(),pageSize,pageIndex });
+           
         }
         //-----------paging method------------
         public IEnumerable<Teacher> GetContext(TeacherContext t, int pageSize, int pageIndex)
         {
+           // pageSize = 2;
+          //  pageIndex = 1;
             int skipRows = (pageIndex - 1) * pageSize;
             var q = from teach in t.Teachers select teach ;
             return q.OrderBy(p=>p.TeacherID).Skip(skipRows).Take(pageSize).ToList();
