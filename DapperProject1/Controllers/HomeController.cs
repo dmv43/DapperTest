@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DapperProject1.Models;
 
+
+
 namespace DapperProject1.Controllers
 {
     public class HomeController : Controller
@@ -21,8 +23,8 @@ namespace DapperProject1.Controllers
         public IActionResult TeacherGrid()
         {
 
-             return View(db.Teachers.ToList());
-          //  return View();
+           //  return View(db.Teachers.ToList());
+            return View();
         }
         [HttpGet]
         public IActionResult ShowTeacherPage(int ID)
@@ -35,17 +37,23 @@ namespace DapperProject1.Controllers
         }
         public JsonResult GetData()
         {
-           int pageSize = 2;
-            int pageCount = 1;
-            //  return  Json(db.Teachers.ToList());
-            return Json(GetContext(db, pageSize, pageCount));
+           
+            string pageSizeString = Request.Query.FirstOrDefault(p => p.Key == "pageSize").Value;
+            int pageSize = Int32.Parse(pageSizeString);
+            string pageIndexString = Request.Query.FirstOrDefault(p => p.Key == "pageIndex").Value;
+            int pageIndex = Int32.Parse(pageSizeString);
+
+            
+            //return Json(mainData);
+            return Json(new { data = GetContext(db, pageSize, pageIndex),itemsCount = db.Teachers.Count() });
+
         }
         //-----------paging method------------
-        public IEnumerable<Teacher> GetContext(TeacherContext t, int pageSize, int pageCount)
+        public IEnumerable<Teacher> GetContext(TeacherContext t, int pageSize, int pageIndex)
         {
-            int skipRows = (pageCount - 1) * pageSize;
+            int skipRows = (pageIndex - 1) * pageSize;
             var q = from teach in t.Teachers select teach ;
-            return q.Skip(skipRows).Take(pageSize).ToList();
+            return q.OrderBy(p=>p.TeacherID).Skip(skipRows).Take(pageSize).ToList();
         }
         //=============================================
 

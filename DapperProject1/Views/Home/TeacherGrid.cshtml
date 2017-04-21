@@ -25,25 +25,30 @@
             sorting: true,
             autoload: true,
             paging: true,
+            pageLoading: true,
             
-            pageSize: 3,
+                pageSize: 1,
+              //  pageIndex: 3,
            
-         //  pageCount: 2,
+         
            
 
             controller: {
                 loadData: function (filter) {
                     var d = $.Deferred();
                     console.log(filter.pageSize);
-                    console.log(filter.pageCount);
+                    console.log(filter.pageIndex);
                     $.ajax({
                         url: "/Home/GetData",
-                        dataType: "json"
+                        dataType: "json",
+                       
+                        data: filter
                     }).done(function (response) {
+                      //  debugger;
                         d.resolve(response);
                     });
 
-                    return d.promise(filter);
+                    return d.promise();
                 }
             },
 
