@@ -11,7 +11,7 @@ namespace DapperProject1.Repositories
 {
     public interface ITagRepository
     {
-        void Add(Tag tag);
+        int Add(Tag tag);
         Tag Get(int id);
 
 
@@ -25,10 +25,10 @@ namespace DapperProject1.Repositories
         }
         string connectionString = null;
 
-        public void Add(Tag tag)
+        public int Add(Tag tag)
         {
 
-            tag.id = Connection.ExecuteScalar<int>("INSERT INTO Tag (tag) VALUES(@tag); SELECT CAST(SCOPE_IDENTITY())", tag, transaction: Transaction);
+           return tag.id = Connection.ExecuteScalar<int>("INSERT INTO Tag (tag) VALUES(@tag); SELECT CAST(SCOPE_IDENTITY())", tag, transaction: Transaction);
 
         }
 

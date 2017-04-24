@@ -36,13 +36,17 @@ namespace DapperProject1.Repositories
             teacher.id = Connection.ExecuteScalar<int>("INSERT INTO Teacher (nickname, italki_url, hire_date, student_count ," +
                             "session_count , description, rating, country, url,italki_id) VALUES(@nickname, @italki_url, @hire_date, @student_count, @session_count" +
                             ", @ description, @rating, @country, @url, @italki_id); SELECT CAST(SCOPE_IDENTITY())", teacher, transaction: Transaction);
-            foreach(var lang in teacher.languages)
+            int langid;
+            int tagid;
+            foreach (var lang in teacher.languages)
             {
-                langRep.Add(lang);
+                langid = langRep.Add(lang);
+                Connection.Execute("INSERT INTO TeacherLanguage (teacher_id, language_id) VALUES(@id, @langid); SELECT CAST(SCOPE_IDENTITY())", param : new {teacher_id = teacher.id ,language_id = langid  }, transaction: Transaction);
             }
             foreach (var tg in teacher.tags)
             {
-                tagRep.Add(tg);
+               tagid =  tagRep.Add(tg);
+                Connection.Execute("INSERT INTO TeacherTag (teacher_id, tag_id) VALUES(@id, @tagid); SELECT CAST(SCOPE_IDENTITY())", param: new { teacher_id = teacher.id, tag_id = tagid }, transaction: Transaction);
             }
         }
 
@@ -51,7 +55,7 @@ namespace DapperProject1.Repositories
             Teacher teach = new Teacher();
               teach = Connection.Query<Teacher>("SELECT * FROM Teacher" +
               " WHERE id = @id", new { id }, transaction: Transaction).FirstOrDefault();
-            teach.languages.AddRange();
+           
 
             return teach;
         }

@@ -19,10 +19,28 @@ namespace DapperProject1.Models
             teach.hire_date = t.HireDate;
             teach.italki_id = t.user_id;
             teach.rating = t.pro_rating;
-            teach.languages = t.language_obj_s;
+            foreach (var z in t.language_obj_s)
+            {
+                Language l = new Language()
+                {
+                    language = z.language
+
+                };
+                teach.languages.Add(l);
+            }
+            foreach (var tg in t.personal_tag)
+            {
+                Tag ss = new Tag()
+                {
+                      tag = tg.tag
+
+                };
+                teach.tags.Add(ss);
+            }
+
             teach.session_count = t.session_count;
             teach.student_count = t.student_count;
-            teach.tags = t.personal_tag;
+            
             teach.url = t.url;
             teach.description = t.textid;
             teach.country = t.origin_country_id;
