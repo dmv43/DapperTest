@@ -2,33 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace DapperProject1.Models
 {
     public class Teacher
     {
-        public int TeacherID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public int NumberOfStudents { get; set; }
-        public int NumberOfLessons { get; set; }
-        public string Description { get; set; }
-        public double Rating { get; set; }
-        public string Location { get; set; }
-        public string URL { get; set; }
-        public string ItalkiURL { get; set; }
+        public int id{ get; set; }
+        public string nickname { get; set; }
+        public string italki_url { get; set; }
 
-        //      public static IEnumerable<Teacher> GetTeachers(TeacherContext context)
-        //      {
+        public string hire_date { get; set; }
+        public int student_count { get; set; }
+        public int session_count { get; set; }
+        public string description { get; set; }
+        public double rating { get; set; }
+        public string country { get; set; }
+        public string url { get; set; }
+        public int italki_id { get; set; }
 
-        //connection can also be injected
-        //           return context.Teachers
-        //                    .Select(entity => new Teacher())
-        //                   .ToList();
+        public List<Language> languages { get; set; }
+        public List<Tag> tags { get; set; }
 
-
-
-        //      }
+    }
+    public class Language
+    {
+        
+        public string language { get; set; }
+        public int id { get; set; }
+    }
+    public class Tag
+    {
+        public string tag { get; set; }
+        public int id { get; set; }
     }
 }

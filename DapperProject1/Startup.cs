@@ -29,9 +29,13 @@ namespace DapperProject1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<TeacherContext>(options => options.UseSqlServer(connection));
-            
+            //Entity connection
+            // string connection = Configuration.GetConnectionString("DefaultConnection");
+            //  services.AddDbContext<TeacherContext>(options => options.UseSqlServer(connection));
+           //____________Old Connection___________________________
+            string connectionString = "Server=.\\SQLEXPRESS;Initial Catalog=userstore;Integrated Security=True";
+            services.AddTransient<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connectionString));
+          
             // Add framework services.
             services.AddMvc();
 
@@ -61,7 +65,7 @@ namespace DapperProject1
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            SampleData.Initialize(app.ApplicationServices);
+          //  SampleData.Initialize(app.ApplicationServices);
         }
     }
 }

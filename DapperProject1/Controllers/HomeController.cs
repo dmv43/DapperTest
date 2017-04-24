@@ -4,24 +4,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DapperProject1.Models;
-
+using DapperProject1.Repositories;
 namespace DapperProject1.Controllers
 {
     public class HomeController : Controller
     {
-        TeacherContext db;
-        public HomeController(TeacherContext context)
+        IUnitOfWork repo ;
+        public HomeController(IUnitOfWork r)
         {
-            db = context;
+            repo = r;
         }
         public IActionResult Index()
         {
-            return View(db.Teachers.ToList());
+            return View(repo.TeacherRepository.GetTeachers());
         }
         public IActionResult TeacherGrid()
         {
 
-             return View(db.Teachers.ToList());
+             return View(repo.TeacherRepository.GetTeachers());
           //  return View();
         }
         [HttpGet]
@@ -29,7 +29,7 @@ namespace DapperProject1.Controllers
         {
             ViewBag.TeacherID = ID;
             // return View(db.Teachers.ToList());
-            var teacher = db.Teachers.FirstOrDefault(s=>s.TeacherID == ID);
+            var teacher = repo.TeacherRepository.Get(ID);
             return View(teacher);
         
         }
@@ -38,13 +38,13 @@ namespace DapperProject1.Controllers
            int pageSize = 2;
             int pageCount = 1;
             //  return  Json(db.Teachers.ToList());
-            return Json(GetContext(db, pageSize, pageCount));
+            return Json(GetContext(repo, pageSize, pageCount));
         }
         //-----------paging method------------
-        public IEnumerable<Teacher> GetContext(TeacherContext t, int pageSize, int pageCount)
+        public IEnumerable<TeacherInfoObj> GetContext(IUnitOfWork t, int pageSize, int pageCount)
         {
             int skipRows = (pageCount - 1) * pageSize;
-            var q = from teach in t.Teachers select teach ;
+            var q = from teach in t.TeacherRepository.GetTeachers() select teach ;
             return q.Skip(skipRows).Take(pageSize).ToList();
         }
         //=============================================
