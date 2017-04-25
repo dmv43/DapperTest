@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DapperProject1.Repositories.ITeacherRepository>
+﻿@model IEnumerable<DapperProject1.Models.Teacher>
 @{
     ViewData["Title"] = "Teachers";
 
@@ -21,27 +21,28 @@
         $("#jsGrid").jsGrid({
             height: "auto",
             width: "100%",
-            //filtering: true,
+            
             sorting: true,
             autoload: true,
             paging: true,
-            
-            pageSize: 3,
+            pageLoading: true,
+            pageSize: 10,
            
-         //  pageCount: 2,
+         
            
 
             controller: {
                 loadData: function (filter) {
                     var d = $.Deferred();
-                    console.log(filter.pageSize);
-                    console.log(filter.pageCount);
+                    console.log(filter);
                     $.ajax({
-                        url: "/Home/GetData",
-                        dataType: "json"
+                        url: "/Home/GetData?pageSize=" + filter.pageSize + " & pageIndex=" + filter.pageIndex,
+                        dataType: "json",
+
+                        data: filter
                     }).done(function (response) {
-                        d.resolve(response);
-                    });
+                            d.resolve(response);
+                        });
 
                     return d.promise(filter);
                 }

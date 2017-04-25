@@ -34,23 +34,24 @@ namespace DapperProject1.Controllers
             return View(teacher);
         
         }
-        public JsonResult GetData()
+        public JsonResult GetData(int pageSize, int pageIndex)
         {
-           int pageSize = 2;
-            int pageCount = 1;
-            
-            return Json(GetContext(repo, pageSize, pageCount));
+            var q = from teach in repo.TeacherRepository.GetTeachers() select teach;
+
+            var adata = new {data = GetContext(repo, pageSize, pageIndex), itemsCount = q.Count(), pageSize, pageIndex};
+            return Json(adata);
         }
         //-----------paging method------------
-        public IEnumerable<Teacher> GetContext(IUnitOfWork t, int pageSize, int pageCount)
+        public IEnumerable<Teacher> GetContext(IUnitOfWork t, int pageSize, int pageIndex)
         {
-            int skipRows = (pageCount - 1) * pageSize;
+            int skipRows = (pageIndex - 1) * pageSize;
             var q = from teach in t.TeacherRepository.GetTeachers() select teach ;
-            return q.Skip(skipRows).Take(pageSize).ToList();
+            
+            return q.OrderBy(p => p.id).Skip(skipRows).Take(pageSize).ToList();
         }
         //=============================================
 
-        public IActionResult DatabaseManipulation()
+    /*    public IActionResult DatabaseManipulation()
         {
             TeacherFabric fabric = new TeacherFabric();
             List<Teacher> teachers;
@@ -62,7 +63,7 @@ namespace DapperProject1.Controllers
                     }
             repo.Commit();
             return View();
-        }
+        }  */
 
 
     }

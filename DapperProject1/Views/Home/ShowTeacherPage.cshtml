@@ -1,18 +1,18 @@
-﻿@model DapperProject1.Models.TeacherInfoObj
+﻿@model DapperProject1.Models.Teacher
     @{
         ViewData["Title"] = "Teacher";
     }
     <h3>Teachers</h3>
     <table class="table-condensed">
         <tr>
-            <td>Nickname </td>
-            <td>HireDate</td>
-            <td>ItalkiUrl </td>
-            <td>NumberOfStudents  </td>
-            <td>NumberOfLessons  </td>
-            <td>Description </td>
-            <td>Location  </td>
-            <td>Rating  </td>
+            <td>nickname </td>
+            <td>min_price</td>
+            <td>italki_url </td>
+            <td>student_count  </td>
+            <td>session_count  </td>
+            <td>description </td>
+            <td>country </td>
+            <td>rating  </td>
             
             
             <td></td>
@@ -21,13 +21,13 @@
         
             <tr>
                 <td>@Model.nickname  </td>
-                <td>@Model.HireDate  </td>
-                <td>@Model.ItalkiUrl  </td>
+                <td>@Model.min_price  </td>
+                <td>@Model.italki_url  </td>
                 <td>@Model.student_count  </td>
                 <td>@Model.session_count </td>
-                <td>@Model.textid  </td>
-                <td>@Model.origin_country_id  </td>
-                <td>@Model.pro_rating  </td>
+                <td>@Model.description  </td>
+                <td>@Model.country  </td>
+                <td>@Model.rating  </td>
                
                
             </tr>
