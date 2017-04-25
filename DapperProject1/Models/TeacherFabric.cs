@@ -7,44 +7,47 @@ namespace DapperProject1.Models
 {
     public interface ITeacherFabric
     {
-        Teacher Build(TeacherInfoObj t);
+        List<Teacher> Build(RootObject t);
     }
     public class TeacherFabric : ITeacherFabric
     {
-        public  Teacher Build(TeacherInfoObj t)
+        public  List<Teacher> Build(RootObject t)
         {
-            Teacher teach = new Teacher();
-            teach.nickname = t.nickname;
-            teach.italki_url = t.ItalkiUrl;
-            teach.hire_date = t.HireDate;
-            teach.italki_id = t.user_id;
-            teach.rating = t.pro_rating;
-            foreach (var z in t.language_obj_s)
+            List<Teacher> teach = new List<Teacher>();
+            for(int i=0; i<t.data.Count; i++)
             {
-                Language l = new Language()
+
+                teach[i].nickname = t.data[i].nickname;
+                teach[i].italki_url = "https://italki.com/teacher/"+ t.data[i].teacher_info_obj.user_id;
+                teach[i].hire_date = t.data[i].last_login_time;
+                teach[i].italki_id = t.data[i].teacher_info_obj.user_id;
+                teach[i].rating = double.Parse(t.data[i].teacher_info_obj.pro_rating);
+                foreach (var z in t.data[i].language_obj_s)
                 {
-                    language = z.language
+                    Language l = new Language()
+                    {
+                        language = z.language
 
-                };
-                teach.languages.Add(l);
-            }
-            foreach (var tg in t.personal_tag)
-            {
-                Tag ss = new Tag()
+                    };
+                    teach[i].languages.Add(l);
+                }
+                foreach (var tg in t.data[i].personal_tag)
                 {
-                      tag = tg.tag
+                    Tag ss = new Tag()
+                    {
+                        tag = tg
 
-                };
-                teach.tags.Add(ss);
+                    };
+                    teach[i].tags.Add(ss);
+                }
+
+                teach[i].session_count = t.data[i].teacher_info_obj.session_count;
+                teach[i].student_count = t.data[i].teacher_info_obj.student_count;
+
+                teach[i].url = "/Home/ShowTeacherPage"+teach[i].id;
+                teach[i].description = t.data[i].textid;
+                teach[i].country = t.data[i].origin_country_id;
             }
-
-            teach.session_count = t.session_count;
-            teach.student_count = t.student_count;
-            
-            teach.url = t.url;
-            teach.description = t.textid;
-            teach.country = t.origin_country_id;
-
             return teach;
         }
     }

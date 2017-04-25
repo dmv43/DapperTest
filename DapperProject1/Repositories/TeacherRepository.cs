@@ -55,15 +55,11 @@ namespace DapperProject1.Repositories
             Teacher teach = new Teacher();
               teach = Connection.Query<Teacher>("SELECT * FROM Teacher" +
               " WHERE id = @id", new { id }, transaction: Transaction).FirstOrDefault();
-           
-
             return teach;
         }
 
         public List<Teacher> GetTeachers()
         {
-
-
             return Connection.Query<Teacher>("SELECT * FROM Teacher", transaction: Transaction).ToList();
         }
 
