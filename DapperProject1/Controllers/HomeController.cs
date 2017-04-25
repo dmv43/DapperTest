@@ -16,7 +16,7 @@ namespace DapperProject1.Controllers
         }
         public IActionResult Index()
         {
-            return View(repo.TeacherRepository.GetTeachers());
+            return View();
         }
         public IActionResult TeacherGrid()
         {
@@ -41,7 +41,7 @@ namespace DapperProject1.Controllers
             return Json(GetContext(repo, pageSize, pageCount));
         }
         //-----------paging method------------
-        public IEnumerable<TeacherInfoObj> GetContext(IUnitOfWork t, int pageSize, int pageCount)
+        public IEnumerable<Teacher> GetContext(IUnitOfWork t, int pageSize, int pageCount)
         {
             int skipRows = (pageCount - 1) * pageSize;
             var q = from teach in t.TeacherRepository.GetTeachers() select teach ;

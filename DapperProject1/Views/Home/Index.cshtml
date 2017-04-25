@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DapperProject1.Models.ITeacherRepository>
+﻿@model IEnumerable<DapperProject1.Repositories.ITeacherRepository>
 @{
     ViewData["Title"] = "Teachers";
     
@@ -7,7 +7,10 @@
 <h3>Teachers</h3>
 <table class="table-condensed">
     
- 
+    <tr>
+
+        <td><a href="~/Home/TeacherGrid">Write data to DB</a></td>
+    </tr>
         <tr>
             
             <td><a href="~/Home/TeacherGrid">ShowTeachers</a></td>

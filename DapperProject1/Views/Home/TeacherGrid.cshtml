@@ -55,14 +55,14 @@
                     }, width: 30, filtering: true
                 },
                 {
-                    name: "italkiURL", itemTemplate: function (value) {
+                    name: "italki_url", itemTemplate: function (value) {
                         return $("<a>").attr("href", "https://" + value).text("Italki Link");
                     }, width: 35, filtering: true
                 },
-                { name: "firstName", type: "text", width: 20 },
-                { name: "lastName", type: "text", width: 20 },
-                { name: "numberOfStudents", type: "number", width: 25 },
-                { name: "numberOfLessons", type: "number", width: 25 },
+                { name: "nickname", type: "text", width: 20 },
+                { name: "country", type: "text", width: 20 },
+                { name: "student_count", type: "number", width: 25 },
+                { name: "session_count", type: "number", width: 25 },
                 { name: "rating", type: "number", width: 8 }
             ]
         });

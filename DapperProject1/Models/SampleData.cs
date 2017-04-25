@@ -7,7 +7,7 @@ using DapperProject1.Repositories;
 
 namespace DapperProject1.Models
 {
-    public class SampleData
+  /*  public class SampleData
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
@@ -45,6 +45,6 @@ namespace DapperProject1.Models
             }
 
         }
-    }
+    } */
 }
 
