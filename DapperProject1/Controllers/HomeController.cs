@@ -58,7 +58,9 @@ namespace DapperProject1.Controllers
             teachers = fabric.Build(WorkWithFile.deserialize());
             foreach (var teacher in teachers) {
                 repo.TeacherRepository.Create(teacher);
+                
                     }
+            repo.Commit();
             return View();
         }
 
