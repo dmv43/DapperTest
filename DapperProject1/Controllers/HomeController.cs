@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DapperProject1.Models;
 using DapperProject1.Repositories;
+using System.IO;
 namespace DapperProject1.Controllers
 {
     public class HomeController : Controller
@@ -53,7 +54,8 @@ namespace DapperProject1.Controllers
         {
             TeacherFabric fabric = new TeacherFabric();
             List<Teacher> teachers;
-            teachers = fabric.Build(Query.startQuery());
+            
+            teachers = fabric.Build(WorkWithFile.deserialize());
             foreach (var teacher in teachers) {
                 repo.TeacherRepository.Create(teacher);
                     }

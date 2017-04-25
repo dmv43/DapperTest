@@ -21,33 +21,30 @@ namespace DapperProject1.Models
 
                 teacher.nickname = t.data[i].nickname;
                 teacher.italki_url = "https://italki.com/teacher/"+ t.data[i].teacher_info_obj.user_id;
-                teacher.hire_date = t.data[i].last_login_time;
+                teacher.min_price = t.data[i].teacher_info_obj.min_price_usd;
                 teacher.italki_id = t.data[i].teacher_info_obj.user_id;
-                teacher.rating = double.Parse(t.data[i].teacher_info_obj.pro_rating);
+                
+                teacher.rating = t.data[i].teacher_info_obj.tutor_rating;
                 foreach (var z in t.data[i].language_obj_s)
                 {
-                    Language l = new Language()
-                    {
-                        language = z.language
-
-                    };
+                    Language l = new Language();
+                    l.language = z.language;
+                    l.id = z.id;
                     teacher.languages.Add(l);
                 }
                 foreach (var tg in t.data[i].personal_tag)
                 {
-                    Tag ss = new Tag()
-                    {
-                        tag = tg.tag_name
-
-                    };
+                    Tag ss = new Tag();
+                    ss.tag = tg.tag_name;
+                    ss.id = tg.tag_id;
                     teacher.tags.Add(ss);
                 }
 
                 teacher.session_count = t.data[i].teacher_info_obj.session_count;
                 teacher.student_count = t.data[i].teacher_info_obj.student_count;
 
-                teacher.url = "/Home/ShowTeacherPage"+teach[i].id;
-                teacher.description = t.data[i].textid;
+                teacher.url = "/Home/ShowTeacherPage"+teacher.id;
+                teacher.description = t.data[i].teacher_info_obj.intro;
                 teacher.country = t.data[i].origin_country_id;
                 teach.Add(teacher);
             }

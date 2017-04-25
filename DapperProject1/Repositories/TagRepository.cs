@@ -28,7 +28,7 @@ namespace DapperProject1.Repositories
         public int Add(Tag tag)
         {
 
-           return tag.id = Connection.ExecuteScalar<int>("INSERT INTO Tag (tag) VALUES(@tag); SELECT CAST(SCOPE_IDENTITY())", tag, transaction: Transaction);
+           return tag.id = Connection.ExecuteScalar<int>("INSERT INTO Tag (tag) VALUES(@tag); SELECT SCOPE_IDENTITY()", param: new {tag = tag.tag }, transaction: Transaction);
 
         }
 

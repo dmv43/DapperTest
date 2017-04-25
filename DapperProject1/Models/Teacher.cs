@@ -11,24 +11,24 @@ namespace DapperProject1.Models
         public string nickname { get; set; }
         public string italki_url { get; set; }
 
-        public string hire_date { get; set; }
+        public string min_price { get; set; }
         public int student_count { get; set; }
         public int session_count { get; set; }
         public string description { get; set; }
-        public double rating { get; set; }
+        public string rating { get; set; }
         public string country { get; set; }
         public string url { get; set; }
         public int italki_id { get; set; }
 
-        public List<Language> languages { get; set; }
-        public List<Tag> tags { get; set; }
+        public List<Language> languages = new List<Language>();
+        public List<Tag> tags = new List<Tag>();
 
     }
     public class Language
     {
         
         public string language { get; set; }
-        public int id { get; set; }
+        public int id  { get; set; }
     }
     public class Tag
     {

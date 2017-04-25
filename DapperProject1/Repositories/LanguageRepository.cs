@@ -28,7 +28,7 @@ namespace DapperProject1.Repositories
         public int Add(Language language)
         {
 
-           return language.id = Connection.ExecuteScalar<int>("INSERT INTO Language (language) VALUES(@language); SELECT CAST(SCOPE_IDENTITY())", language, transaction: Transaction);
+           return language.id = Connection.ExecuteScalar<int>("INSERT INTO Language (language) VALUES(@language); SELECT SCOPE_IDENTITY()", param: new { language = language.language}, transaction: Transaction);
 
 
         }
