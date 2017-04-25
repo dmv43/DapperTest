@@ -22,27 +22,14 @@ namespace DapperProject1.Models
                     mainObject.data.AddRange(JsonConvert.DeserializeObject<RootObject>(result[i]).data);
                 }
             }
-
-
             return mainObject;
-
-
-
 
         }
         public static RootObject deserialize(string result)
         {
-
-
             RootObject mainObject = JsonConvert.DeserializeObject<RootObject>(result);
 
-
-            // Console.WriteLine(mainObject.data);
-            //  mainObject.data.ForEach(Console.WriteLine);
-            // Console.WriteLine(mainObject.meta.current_page);
-
             return mainObject;
-
         }
     }
 }

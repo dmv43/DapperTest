@@ -59,7 +59,7 @@ namespace DapperProject1.Models
         public ExamResultShownObj exam_result_shown_obj { get; set; }
         public int course_count { get; set; }
         public int favourite_flag { get; set; }
-        public List<string> personal_tag { get; set; }
+        public List<PersonalTag> personal_tag { get; set; }
         public string textid { get; set; }
         public string nickname { get; set; }
         public int has_contacted { get; set; }
@@ -74,7 +74,12 @@ namespace DapperProject1.Models
         public int is_pro { get; set; }
         public string last_login_time { get; set; }
     }
-
+    public class PersonalTag
+    {
+        public string tag_name { get; set; }
+        public int vote_count { get; set; }
+        public int tag_id { get; set; }
+    }
     public class RootObject
     {
         public string performance { get; set; }

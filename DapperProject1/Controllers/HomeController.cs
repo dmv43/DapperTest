@@ -28,7 +28,7 @@ namespace DapperProject1.Controllers
         public IActionResult ShowTeacherPage(int ID)
         {
             ViewBag.TeacherID = ID;
-            // return View(db.Teachers.ToList());
+            
             var teacher = repo.TeacherRepository.Get(ID);
             return View(teacher);
         
@@ -37,7 +37,7 @@ namespace DapperProject1.Controllers
         {
            int pageSize = 2;
             int pageCount = 1;
-            //  return  Json(db.Teachers.ToList());
+            
             return Json(GetContext(repo, pageSize, pageCount));
         }
         //-----------paging method------------
@@ -48,6 +48,17 @@ namespace DapperProject1.Controllers
             return q.Skip(skipRows).Take(pageSize).ToList();
         }
         //=============================================
+
+        public IActionResult DatabaseManipulation()
+        {
+            TeacherFabric fabric = new TeacherFabric();
+            List<Teacher> teachers;
+            teachers = fabric.Build(Query.startQuery());
+            foreach (var teacher in teachers) {
+                repo.TeacherRepository.Create(teacher);
+                    }
+            return View();
+        }
 
 
     }

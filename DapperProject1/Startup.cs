@@ -33,7 +33,7 @@ namespace DapperProject1
             // string connection = Configuration.GetConnectionString("DefaultConnection");
             //  services.AddDbContext<TeacherContext>(options => options.UseSqlServer(connection));
            //____________Old Connection___________________________
-            string connectionString = "Server=.\\SQLEXPRESS;Initial Catalog=userstore;Integrated Security=True";
+            string connectionString = "Server=localhost;Database=Italki;Trusted_Connection=True;";
             services.AddTransient<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connectionString));
           
             // Add framework services.

@@ -38,7 +38,7 @@ namespace DapperProject1.Models
 
                     i++;
 
-                    int zz = rand.Next(300, 2000);
+                    int zz = rand.Next(10, 200);
                     System.Threading.Thread.Sleep(zz);
                  
                    
