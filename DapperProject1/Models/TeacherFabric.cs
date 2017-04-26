@@ -20,7 +20,7 @@ namespace DapperProject1.Models
 
 
                 teacher.nickname = t.data[i].nickname;
-                teacher.italki_url = "https://italki.com/teacher/"+ t.data[i].teacher_info_obj.user_id;
+                teacher.italki_url = "www.italki.com/teacher/"+ t.data[i].teacher_info_obj.user_id;
                 teacher.min_price = t.data[i].teacher_info_obj.min_price_usd;
                 teacher.italki_id = t.data[i].teacher_info_obj.user_id;
                 
