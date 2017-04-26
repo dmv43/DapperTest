@@ -22,27 +22,34 @@
             height: "auto",
             width: "100%",
             
-            sorting: true,
+            
             autoload: true,
             paging: true,
             pageLoading: true,
+            sorting: true,
             pageSize: 10,
            
          
            
 
             controller: {
+                
                 loadData: function (filter) {
+                    
                     var d = $.Deferred();
                     console.log(filter);
+                    
                     $.ajax({
-                        url: "/Home/GetData?pageSize=" + filter.pageSize + " & pageIndex=" + filter.pageIndex,
+
+                        url: "/Home/GetData?pageSize=" + filter.pageSize + " & pageIndex=" + filter.pageIndex + "& sortField=" + filter.sortField + "& sortOrder="+filter.sortOrder,
                         dataType: "json",
 
                         data: filter
+                        
                     }).done(function (response) {
                             d.resolve(response);
                         });
+                    
 
                     return d.promise(filter);
                 }

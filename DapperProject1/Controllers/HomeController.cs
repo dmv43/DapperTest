@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using DapperProject1.Models;
 using DapperProject1.Repositories;
 using System.IO;
+using System.Linq.Expressions;
+using System.Reflection;
+
 namespace DapperProject1.Controllers
 {
     public class HomeController : Controller
@@ -19,12 +22,14 @@ namespace DapperProject1.Controllers
         {
             return View();
         }
+        //main grid page
         public IActionResult TeacherGrid()
         {
 
              return View(repo.TeacherRepository.GetTeachers());
-          //  return View();
+         
         }
+        //concrete teacher page
         [HttpGet]
         public IActionResult ShowTeacherPage(int id)
         {
@@ -35,21 +40,38 @@ namespace DapperProject1.Controllers
             return View(teacher);
         
         }
-        public JsonResult GetData(int pageSize, int pageIndex)
+        //creating JSON from database data
+        public JsonResult GetData(int pageSize, int pageIndex, string sortField ="id", string sortOrder ="asc" )
         {
             var q = from teach in repo.TeacherRepository.GetTeachers() select teach;
 
-            var adata = new {data = GetContext(repo, pageSize, pageIndex), itemsCount = q.Count(), pageSize, pageIndex};
+            var adata = new {data = GetContext(repo, pageSize, pageIndex,sortField,sortOrder), itemsCount = q.Count(), pageSize, pageIndex};
             return Json(adata);
         }
         //-----------paging method------------
-        public IEnumerable<Teacher> GetContext(IUnitOfWork t, int pageSize, int pageIndex)
+        public IEnumerable<Teacher> GetContext(IUnitOfWork t, int pageSize, int pageIndex, string sortField,string sortOrder)
         {
+            
             int skipRows = (pageIndex - 1) * pageSize;
             var q = from teach in t.TeacherRepository.GetTeachers() select teach ;
-            
-            return q.OrderBy(p => p.id).Skip(skipRows).Take(pageSize).ToList();
-        }
+            //  var type = Type.GetType("Teacher");
+         //   var xx = typeof(Teacher).GetProperty(sortField);
+            var param = Expression.Parameter(typeof(Teacher), "x");
+            Expression conversion = Expression.Convert(Expression.Property
+            (param, sortField), typeof(object));   
+
+            var zz = Expression.Lambda<Func<Teacher, object>>(conversion, param);
+
+            if (sortOrder == "asc")
+            {
+               
+                return q.AsQueryable().OrderBy(zz).Skip(skipRows).Take(pageSize).ToList();
+            }
+            else
+            {
+                return q.AsQueryable().OrderByDescending(zz).Skip(skipRows).Take(pageSize).ToList();
+            }
+            }
         //=============================================
 
         public IActionResult DatabaseManipulation()
