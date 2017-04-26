@@ -13,6 +13,7 @@ namespace DapperProject1.Repositories
     {
         int Add(Tag tag);
         Tag Get(int id);
+        void Update(Tag tag);
 
 
     }
@@ -38,6 +39,11 @@ namespace DapperProject1.Repositories
                    " WHERE id = @id", new { id }).FirstOrDefault();
 
 
+        }
+
+        public void Update(Tag tag)
+        {
+            throw new NotImplementedException();
         }
     }
 }

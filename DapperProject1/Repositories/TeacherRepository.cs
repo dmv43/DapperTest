@@ -16,6 +16,7 @@ namespace DapperProject1.Repositories
         void Create(Teacher teacher);
         Teacher Get(int id);
         List<Teacher> GetTeachers();
+        void Update(Teacher teacher);
 
     }
     internal class TeacherRepository : RepositoryBase, ITeacherRepository
@@ -52,11 +53,11 @@ namespace DapperProject1.Repositories
             }
         }
 
-        public Teacher Get(int id)
+        public Teacher Get(int italki_id)
         {
             Teacher teach = new Teacher();
               teach = Connection.Query<Teacher>("SELECT * FROM Teacher" +
-              " WHERE id = @id", new { id }, transaction: Transaction).FirstOrDefault();
+              " WHERE italki_id = @italki_id", new { italki_id }, transaction: Transaction).FirstOrDefault();
             return teach;
         }
 
@@ -65,6 +66,43 @@ namespace DapperProject1.Repositories
             return Connection.Query<Teacher>("SELECT * FROM Teacher", transaction: Transaction).ToList();
         }
 
+        public void Update(Teacher teacher)
+        {
+            if (teacher == null)
+                throw new ArgumentNullException("teacher");
+        //   LanguageRepository langRep = new LanguageRepository(transaction: Transaction);
+        //      TagRepository tagRep = new TagRepository(transaction: Transaction);
+
+
+            teacher.id = Connection.Execute("Update Teacher SET nickname = @nickname, italki_url = @italki_url, min_price = @min_price," +
+                " student_count = @student_count, session_count = @session_count" +
+                            ", description = @description, rating = @rating, country = @country, url = @url" +
+                            " WHERE italki_id = @italki_id", param: new
+                            {
+                                nickname = teacher.nickname,
+                                italki_url = teacher.italki_url,
+                                min_price = teacher.min_price,
+                                student_count = teacher.student_count,
+                                teacher.session_count,
+                                description = teacher.description,
+                                rating = teacher.rating,
+                                country = teacher.country,
+                                url = teacher.url,
+                                italki_id = teacher.italki_id
+                            }, transaction: Transaction);
+       /*     int langid;
+            int tagid;
+            foreach (var lang in teacher.languages)
+            {
+                langid = langRep.Add(lang);
+                Connection.Execute("INSERT INTO TeacherLanguage (teacher_id, language_id) VALUES(@id, @langvid); SELECT SCOPE_IDENTITY()", param: new { id = teacher.id, langvid = langid }, transaction: Transaction);
+            }
+            foreach (var tg in teacher.tags)
+            {
+                tagid = tagRep.Add(tg);
+                Connection.Execute("INSERT INTO TeacherTag (teacher_id, tag_id) VALUES(@teacher_id, @tag_id); SELECT SCOPE_IDENTITY()", param: new { teacher_id = teacher.id, tag_id = tagid }, transaction: Transaction);
+            }  */
+        }
     }
 }
 

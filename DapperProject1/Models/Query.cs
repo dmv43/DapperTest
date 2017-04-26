@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Http;
 namespace DapperProject1.Models
 {
-  /*  public class Query
+    public class Query
     {
         public static RootObject startQuery()
         {
@@ -54,7 +54,7 @@ namespace DapperProject1.Models
 
 
                 } while (check == true);
-                File.WriteAllLines(@"D:\Full_Json_Data.txt", resultString);
+                File.WriteAllLines(@"D:\Full_Json_Data1.txt", resultString);
                RootObject myObject = Deserialize.deserializeBulk(resultString);
                 return myObject;
 
@@ -69,5 +69,5 @@ namespace DapperProject1.Models
             
             return response;
         }
-    } */
+    } 
 }

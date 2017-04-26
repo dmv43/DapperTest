@@ -13,7 +13,7 @@ namespace DapperProject1.Repositories
     {
         int Add(Language language);
         Language Get(int id);
-
+        void Update(Language language);
 
     }
     internal class LanguageRepository : RepositoryBase, ILanguageRepository
@@ -39,6 +39,11 @@ namespace DapperProject1.Repositories
             return Connection.Query<Language>("SELECT * FROM Language" +
                 " WHERE id = @id", new { id }).FirstOrDefault();
 
+        }
+
+        public void Update(Language language)
+        {
+            throw new NotImplementedException();
         }
     }
 }

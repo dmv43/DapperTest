@@ -26,11 +26,12 @@ namespace DapperProject1.Controllers
           //  return View();
         }
         [HttpGet]
-        public IActionResult ShowTeacherPage(int ID)
+        public IActionResult ShowTeacherPage(int id)
         {
-            ViewBag.TeacherID = ID;
+            ViewBag.id = id;
             
-            var teacher = repo.TeacherRepository.Get(ID);
+            var teacher = repo.TeacherRepository.Get(id);
+            repo.Commit();
             return View(teacher);
         
         }
@@ -51,19 +52,26 @@ namespace DapperProject1.Controllers
         }
         //=============================================
 
-    /*    public IActionResult DatabaseManipulation()
+        public IActionResult DatabaseManipulation()
         {
             TeacherFabric fabric = new TeacherFabric();
             List<Teacher> teachers;
-            
+
             teachers = fabric.Build(WorkWithFile.deserialize());
+           // teachers = fabric.Build(Query.startQuery());
             foreach (var teacher in teachers) {
-                repo.TeacherRepository.Create(teacher);
-                
+                if (repo.TeacherRepository.Get(teacher.italki_id) == null)
+                {
+                    repo.TeacherRepository.Create(teacher);
+                }
+                else
+                {
+                    repo.TeacherRepository.Update(teacher);
+                }
                     }
             repo.Commit();
             return View();
-        }  */
+        }  
 
 
     }

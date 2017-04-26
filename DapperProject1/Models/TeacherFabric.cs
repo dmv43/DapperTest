@@ -43,7 +43,7 @@ namespace DapperProject1.Models
                 teacher.session_count = t.data[i].teacher_info_obj.session_count;
                 teacher.student_count = t.data[i].teacher_info_obj.student_count;
 
-                teacher.url = "/Home/ShowTeacherPage"+teacher.id;
+                teacher.url = "/Home/ShowTeacherPage?id="+ t.data[i].teacher_info_obj.user_id;
                 teacher.description = t.data[i].teacher_info_obj.intro;
                 teacher.country = t.data[i].origin_country_id;
                 teach.Add(teacher);
