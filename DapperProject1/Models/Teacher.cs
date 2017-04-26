@@ -7,7 +7,7 @@ namespace DapperProject1.Models
 {
     public class Teacher
     {
-        public int id{ get; set; }
+        public int id { get; set; }
         public string nickname { get; set; }
         public string italki_url { get; set; }
 
@@ -20,6 +20,7 @@ namespace DapperProject1.Models
         public string url { get; set; }
         public int italki_id { get; set; }
 
+        public double session_to_student { get; set; }
         public List<Language> languages = new List<Language>();
         public List<Tag> tags = new List<Tag>();
 

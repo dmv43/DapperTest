@@ -44,6 +44,7 @@ namespace DapperProject1.Controllers
         public JsonResult GetData(int pageSize, int pageIndex, string sortField ="id", string sortOrder ="asc" )
         {
             var q = from teach in repo.TeacherRepository.GetTeachers() select teach;
+            
 
             var adata = new {data = GetContext(repo, pageSize, pageIndex,sortField,sortOrder), itemsCount = q.Count(), pageSize, pageIndex};
             return Json(adata);
@@ -64,12 +65,21 @@ namespace DapperProject1.Controllers
 
             if (sortOrder == "asc")
             {
-               
-                return q.AsQueryable().OrderBy(zz).Skip(skipRows).Take(pageSize).ToList();
+               var y = q.AsQueryable().OrderBy(zz).Skip(skipRows).Take(pageSize).ToList();
+                foreach (var x in q)
+                {
+                    x.session_to_student = Math.Round((double)x.session_count / x.student_count,2, MidpointRounding.AwayFromZero);
+                }
+                return y;
             }
             else
             {
-                return q.AsQueryable().OrderByDescending(zz).Skip(skipRows).Take(pageSize).ToList();
+                var y = q.AsQueryable().OrderByDescending(zz).Skip(skipRows).Take(pageSize).ToList();
+                foreach (var x in y)
+                {
+                    x.session_to_student = Math.Round((double)x.session_count / x.student_count,2,MidpointRounding.AwayFromZero);
+                }
+                return y;
             }
             }
         //=============================================
