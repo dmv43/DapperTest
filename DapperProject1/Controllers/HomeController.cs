@@ -44,9 +44,12 @@ namespace DapperProject1.Controllers
         public JsonResult GetData(int pageSize, int pageIndex, string sortField ="id", string sortOrder ="asc",string nickname =null )
         {
             var q = from teach in repo.TeacherRepository.GetTeachers() select teach;
+
+            IEnumerable<Teacher> final = GetContext(repo, pageSize, pageIndex, sortField, sortOrder, nickname);
             
 
-            var adata = new {data = GetContext(repo, pageSize, pageIndex,sortField,sortOrder,nickname), itemsCount = q.Count(), pageSize, pageIndex};
+            var adata = new {data = final, itemsCount = q.Count(), pageSize, pageIndex};
+            
             return Json(adata);
         }
         //-----------paging method------------
@@ -74,7 +77,7 @@ namespace DapperProject1.Controllers
             if (nickname != null)
             {
 
-                y = q.AsQueryable().OrderBy(s => s.nickname).SkipWhile(s => nickname.ToCharArray().ToList().Except(s.nickname.ToCharArray().ToList()).Any()).Take(pageSize).ToList();
+                y = q.AsQueryable().OrderBy(s => s.nickname).SkipWhile(s => !s.nickname.Contains(nickname)).Take(pageSize).ToList();
                 foreach (var x in q)
                 {
                     x.session_to_student = Math.Round((double)x.session_count / x.student_count, 2, MidpointRounding.AwayFromZero);

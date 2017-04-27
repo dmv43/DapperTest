@@ -55,25 +55,62 @@
                     return d.promise(filter);
                 }
             },
+            headerRowRenderer: function () {
+                var $result = $("<tr>").height(0)
+                    .append($("<th>").width(70))
+                    .append($("<th>").width(140));
+
+                $result = $result.add($("<tr>")
+                    .append($("<th>").attr("colspan", 5).text("№")))
+                var $tr = $("<tr>");
+
+                var grid = this;
+
+                grid._eachField(function (field, index) {
+                    var $th = $("<th>").text(field.title).width(field.width).appendTo($tr);
+
+                    if (grid.sorting && field.sorting) {
+                        $th.on("click", function () {
+                            grid.sort(index);
+                        });
+                    }
+                });
+
+                return $result.add($("<tr>")
+                    .append($("<th>").width(70).text(""))
+                    .append($("<th>").width(70).text("Nickname").on("click", function () { grid.sort(1); }))
+                    .append($("<th>").width(70).text("Country").on("click", function () { grid.sort(2); }))
+                    .append($("<th>").width(70).text("Students").on("click", function () { grid.sort(3); }))
+                    .append($("<th>").width(70).text("Lessons").on("click", function () { grid.sort(4); }))
+                    .append($("<th>").width(70).text("#").on("click", function () { grid.sort(5); }))
+                    .append($("<th>").width(70).text("Rating").on("click", function () { grid.sort(6); }))
+                    .append($("<th>").width(70).text("URL").on("click", function () { grid.sort(7); }))
+                    .append($("<th>").width(70).text("Italki URL").on("click", function () { grid.sort(8); }))
+                );
+            },
 
             fields: [
+                
+                    
+                {name:  "id", type: "number", width:37},
+                { name: "nickname", type: "text", width: 73 },
+                { name: "country", type: "text", width: 72 },
+                { name: "student_count", type: "number", width: 71 },
+                { name: "session_count", type: "number", width: 70 },
+                { name: "session_to_student", type: "number", width: 70 },
+                { name: "rating", type: "number", width: 70 },
                 {
-                    name: "url",
-                    itemTemplate: function (value) {
-                        return $("<a>").attr("href", value).text("Link");
-                    }, width: 30, filtering: true
+                name: "url",
+                itemTemplate: function (value) {
+                    return $("<a>").attr("href", value).text("Link");
+                }, width: 70, filtering: true
                 },
                 {
                     name: "italki_url", itemTemplate: function (value) {
                         return $("<a>").attr("href", "https://" + value).text("Italki Link");
-                    }, width: 35, filtering: true
-                },
-                { name: "nickname", type: "text", width: 20 },
-                { name: "country", type: "text", width: 20 },
-                { name: "student_count", type: "number", width: 15 },
-                { name: "session_count", type: "number", width: 25 },
-                { name: "session_to_student", type: "number", width: 8 },
-                { name: "rating", type: "number", width: 8 }
+                    }, width: 70, filtering: true
+                }
+
             ]
         });
 
