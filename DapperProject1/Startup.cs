@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using DapperProject1.Models;   // пространство имен моделей
 using Microsoft.EntityFrameworkCore; // пространство имен EntityFramework
+using DapperProject1.ViewModels;
 
 namespace DapperProject1
 {
@@ -35,7 +36,7 @@ namespace DapperProject1
            //____________Old Connection___________________________
             string connectionString = "Server=localhost;Database=Italki;Trusted_Connection=True;";
             services.AddTransient<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connectionString));
-          
+            services.AddTransient<ITeacherViewFabric, TeacherViewFabric>(provider => new TeacherViewFabric());
             // Add framework services.
             services.AddMvc();
 

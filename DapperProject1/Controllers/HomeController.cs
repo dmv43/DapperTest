@@ -8,15 +8,17 @@ using DapperProject1.Repositories;
 using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
-
+using DapperProject1.ViewModels;
 namespace DapperProject1.Controllers
 {
     public class HomeController : Controller
     {
         IUnitOfWork repo ;
-        public HomeController(IUnitOfWork r)
+        ITeacherViewFabric fab;
+        public HomeController(IUnitOfWork r,ITeacherViewFabric f)
         {
             repo = r;
+            fab = f;
         }
         public IActionResult Index()
         {
@@ -26,7 +28,8 @@ namespace DapperProject1.Controllers
         public IActionResult TeacherGrid()
         {
 
-             return View(repo.TeacherRepository.GetTeachers());
+            // return View(repo.TeacherRepository.GetTeachers());
+            return View();
          
         }
         //concrete teacher page
@@ -46,9 +49,9 @@ namespace DapperProject1.Controllers
             var q = from teach in repo.TeacherRepository.GetTeachers() select teach;
 
             IEnumerable<Teacher> final = GetContext(repo, pageSize, pageIndex, sortField, sortOrder, nickname);
-            
+            var myFinalData = fab.Build(final);
 
-            var adata = new {data = final, itemsCount = q.Count(), pageSize, pageIndex};
+            var adata = new {data = myFinalData, itemsCount = q.Count(), pageSize, pageIndex};
             
             return Json(adata);
         }
