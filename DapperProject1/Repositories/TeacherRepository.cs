@@ -55,9 +55,32 @@ namespace DapperProject1.Repositories
 
         public Teacher Get(int italki_id)
         {
+            LanguageRepository langRep = new LanguageRepository(transaction: Transaction);
+            TagRepository tagRep = new TagRepository(transaction: Transaction);
             Teacher teach = new Teacher();
               teach = Connection.Query<Teacher>("SELECT * FROM Teacher" +
-              " WHERE italki_id = @italki_id", new { italki_id }, transaction: Transaction).FirstOrDefault();
+              " WHERE italki_id = @lki_id", new { lki_id = italki_id }, transaction: Transaction).FirstOrDefault();
+            int? numberoflang = Connection.ExecuteScalar<int>("SELECT  COUNT (teacher_id) From TeacherLanguage WHERE teacher_id = @id"
+             ,param: new { id = teach.id },transaction:Transaction);
+            if (numberoflang != 0)
+            {
+                for (int i = 1; i <= numberoflang; i++)
+                {
+                    teach.languages.Add(langRep.Get(i));
+                }
+            }
+            
+              int? numberoftag = Connection.ExecuteScalar<int>("SELECT  COUNT (teacher_id) From TeacherTag WHERE teacher_id = @id"
+                  , param: new { id = teach.id }, transaction: Transaction);
+            if (numberoftag != 0)
+            {
+                for (int i = 1; i <= numberoftag; i++)
+                {
+                    teach.tags.Add(tagRep.Get(i));
+                }
+            }
+
+
             return teach;
         }
 

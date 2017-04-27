@@ -27,8 +27,17 @@ namespace DapperProject1.Repositories
 
         public int Add(Language language)
         {
+            int idd = Connection.ExecuteScalar<int>("SELECT id FROM Language WHERE language = @lang", param:new {lang = language.language },transaction:Transaction);
+            if(idd == 0)
+            {
+                language.id = Connection.ExecuteScalar<int>("INSERT INTO Language (language) VALUES(@language); SELECT SCOPE_IDENTITY()", param: new { language = language.language }, transaction: Transaction);
+            }
+            else
+            {
+                language.id = idd;
+            }
 
-           return language.id = Connection.ExecuteScalar<int>("INSERT INTO Language (language) VALUES(@language); SELECT SCOPE_IDENTITY()", param: new { language = language.language}, transaction: Transaction);
+            return language.id;
 
 
         }
@@ -37,7 +46,7 @@ namespace DapperProject1.Repositories
         {
 
             return Connection.Query<Language>("SELECT * FROM Language" +
-                " WHERE id = @id", new { id }).FirstOrDefault();
+                " WHERE id = @idd", new { idd= id },transaction:Transaction).FirstOrDefault();
 
         }
 

@@ -22,7 +22,7 @@
             height: "auto",
             width: "100%",
             
-            
+            filtering: true,
             autoload: true,
             paging: true,
             pageLoading: true,
@@ -41,7 +41,8 @@
                     
                     $.ajax({
 
-                        url: "/Home/GetData?pageSize=" + filter.pageSize + " & pageIndex=" + filter.pageIndex + "& sortField=" + filter.sortField + "& sortOrder="+filter.sortOrder,
+                        url: "/Home/GetData?pageSize=" + filter.pageSize + " & pageIndex=" + filter.pageIndex + "& sortField="
+                        + filter.sortField + "& sortOrder=" + filter.sortOrder + "& nickname=" + filter.nickname,
                         dataType: "json",
 
                         data: filter

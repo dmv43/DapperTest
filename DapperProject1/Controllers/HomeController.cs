@@ -41,47 +41,88 @@ namespace DapperProject1.Controllers
         
         }
         //creating JSON from database data
-        public JsonResult GetData(int pageSize, int pageIndex, string sortField ="id", string sortOrder ="asc" )
+        public JsonResult GetData(int pageSize, int pageIndex, string sortField ="id", string sortOrder ="asc",string nickname =null )
         {
             var q = from teach in repo.TeacherRepository.GetTeachers() select teach;
             
 
-            var adata = new {data = GetContext(repo, pageSize, pageIndex,sortField,sortOrder), itemsCount = q.Count(), pageSize, pageIndex};
+            var adata = new {data = GetContext(repo, pageSize, pageIndex,sortField,sortOrder,nickname), itemsCount = q.Count(), pageSize, pageIndex};
             return Json(adata);
         }
         //-----------paging method------------
-        public IEnumerable<Teacher> GetContext(IUnitOfWork t, int pageSize, int pageIndex, string sortField,string sortOrder)
+        public IEnumerable<Teacher> GetContext(IUnitOfWork t, int pageSize, int pageIndex, string sortField,string sortOrder,string nickname)
         {
             
             int skipRows = (pageIndex - 1) * pageSize;
             var q = from teach in t.TeacherRepository.GetTeachers() select teach ;
-            //  var type = Type.GetType("Teacher");
-         //   var xx = typeof(Teacher).GetProperty(sortField);
             var param = Expression.Parameter(typeof(Teacher), "x");
             Expression conversion = Expression.Convert(Expression.Property
             (param, sortField), typeof(object));   
 
-            var zz = Expression.Lambda<Func<Teacher, object>>(conversion, param);
-
-            if (sortOrder == "asc")
+            //--------------------------
+            foreach(var tea in q)
             {
-               var y = q.AsQueryable().OrderBy(zz).Skip(skipRows).Take(pageSize).ToList();
+                if(tea.student_count==0)
+                {
+                    tea.student_count = 1;
+                }
+            }
+            //--------------------------
+
+            var zz = Expression.Lambda<Func<Teacher, object>>(conversion, param);
+            List<Teacher> y;
+            if (nickname != null)
+            {
+
+                y = q.AsQueryable().OrderBy(s => s.nickname).SkipWhile(s => nickname.ToCharArray().ToList().Except(s.nickname.ToCharArray().ToList()).Any()).Take(pageSize).ToList();
                 foreach (var x in q)
                 {
-                    x.session_to_student = Math.Round((double)x.session_count / x.student_count,2, MidpointRounding.AwayFromZero);
+                    x.session_to_student = Math.Round((double)x.session_count / x.student_count, 2, MidpointRounding.AwayFromZero);
                 }
                 return y;
             }
             else
             {
-                var y = q.AsQueryable().OrderByDescending(zz).Skip(skipRows).Take(pageSize).ToList();
-                foreach (var x in y)
+                if (sortOrder == "asc")
                 {
-                    x.session_to_student = Math.Round((double)x.session_count / x.student_count,2,MidpointRounding.AwayFromZero);
+                    if (sortField == "session_to_student")
+                    {
+
+                        y = q.AsQueryable().OrderBy(s => s.session_count / s.student_count).Skip(skipRows).Take(pageSize).ToList();
+
+                    }
+                    else
+                    {
+                        y = q.AsQueryable().OrderBy(zz).Skip(skipRows).Take(pageSize).ToList();
+                    }
+                    foreach (var x in q)
+                    {
+                        x.session_to_student = Math.Round((double)x.session_count / x.student_count, 2, MidpointRounding.AwayFromZero);
+                    }
+                    return y;
+
+
                 }
-                return y;
+                else
+                {
+                    if (sortField == "session_to_student")
+                    {
+                        y = q.AsQueryable().OrderByDescending(s => s.session_count / s.student_count).Skip(skipRows).Take(pageSize).ToList();
+                    }
+                    else
+                    {
+                        y = q.AsQueryable().OrderByDescending(zz).Skip(skipRows).Take(pageSize).ToList();
+                    }
+                    foreach (var x in y)
+                    {
+                        x.session_to_student = Math.Round((double)x.session_count / x.student_count, 2, MidpointRounding.AwayFromZero);
+                    }
+                    return y;
+
+                }
             }
-            }
+            
+        }
         //=============================================
 
         public IActionResult DatabaseManipulation()

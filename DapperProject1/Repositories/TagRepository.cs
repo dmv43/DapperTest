@@ -28,15 +28,24 @@ namespace DapperProject1.Repositories
 
         public int Add(Tag tag)
         {
+            int idd = Connection.ExecuteScalar<int>("SELECT id FROM Tag WHERE tag = @tg", param: new { tg = tag.tag }, transaction: Transaction);
+            if (idd == 0)
+            {
+                tag.id = Connection.ExecuteScalar<int>("INSERT INTO Tag (tag) VALUES(@tag); SELECT SCOPE_IDENTITY()", param: new { tag = tag.tag }, transaction: Transaction);
+            }
+            else
+            {
+                tag.id = idd;
+            }
 
-           return tag.id = Connection.ExecuteScalar<int>("INSERT INTO Tag (tag) VALUES(@tag); SELECT SCOPE_IDENTITY()", param: new {tag = tag.tag }, transaction: Transaction);
+            return tag.id;
 
         }
 
         public Tag Get(int id)
         {
             return Connection.Query<Tag>("SELECT * FROM Tag" +
-                   " WHERE id = @id", new { id }).FirstOrDefault();
+                   " WHERE id = @idd", new { idd = id },transaction: Transaction).FirstOrDefault();
 
 
         }
