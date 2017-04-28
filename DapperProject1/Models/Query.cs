@@ -39,7 +39,7 @@ namespace DapperProject1.Models
 
                     i++;
 
-                    int zz = rand.Next(50, 250);
+                    int zz = rand.Next(50, 750);
                     System.Threading.Thread.Sleep(zz);
                  
                    
@@ -54,7 +54,7 @@ namespace DapperProject1.Models
 
 
                 } while (check == true);
-                File.WriteAllLines(@"D:\Full_Json_Data1.txt", resultString);
+                File.WriteAllLines(@"D:\Full_Json_Data3.txt", resultString);
                RootObject myObject = Deserialize.deserializeBulk(resultString);
                 return myObject;
 
