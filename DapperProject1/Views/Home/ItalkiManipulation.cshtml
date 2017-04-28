@@ -5,13 +5,10 @@
 }
 
 <div id="preloader"><img src="http://preloaders.net/images/ajax-loader.gif" alt="AJAX loader" title="AJAX loader" /></div>
-<div id="preloaderr"><b > DONE!  </b></div>
+
 <div id="resultDiv"></div>
 <style>
     #preloader {
-        display: none;
-    }
-    #preloaderr {
         display: none;
     }
 </style>
@@ -20,13 +17,40 @@
 <script>
     function makeRequest(url) {
         $('#preloader').show();
-        $.get(url, function (data) {
-            $('#resultDiv').html(data);
-            $('#preloader').hide();
-        }).done(url, function (data) {
-            $('#preloaderr').show;
+        
+        $.ajax({
+            url: url,
+             //3000 second timeout
+            timeout: 3000000,
+            success: function (data) {
+
+                $('#resultDiv').html(data);
+                $('#preloader').hide();
+
+            },
+            error: function (jqXHR, exception)
+            {
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 502) {
+                    msg = 'Wait a bit more, almost finished, then press Home Page';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'Bad Gateway') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+                $('#post').html(msg);
+                },
         });
     }
+    
 </script>
 
 

@@ -9,7 +9,7 @@ namespace DapperProject1.Models
 {
     public class Query
     {
-        public static RootObject startQuery()
+        public static List<string> startQuery()
         {
 
             var values = new Dictionary<string, string>
@@ -39,7 +39,7 @@ namespace DapperProject1.Models
 
                     i++;
 
-                    int zz = rand.Next(50, 750);
+                    int zz = rand.Next(20, 200);
                     System.Threading.Thread.Sleep(zz);
                  
                    
@@ -54,10 +54,10 @@ namespace DapperProject1.Models
 
 
                 } while (check == true);
-                File.WriteAllLines(@"D:\Full_Json_Data3.txt", resultString);
-               RootObject myObject = Deserialize.deserializeBulk(resultString);
-                return myObject;
-
+                File.WriteAllLines(@"D:\Full_Json_Data4.txt", resultString);
+                // RootObject myObject = Deserialize.deserializeBulk(resultString);
+                //return myObject;
+                return resultString;
 
             }
 

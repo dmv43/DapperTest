@@ -143,8 +143,8 @@ namespace DapperProject1.Controllers
             
             List<Teacher> teachers;
 
-          //  teachers = fabric.Build(WorkWithFile.deserialize());
-            teachers = fabric.Build(Query.startQuery());
+          teachers = fabric.Build(WorkWithFile.deserialize());
+        //    teachers = fabric.Build(Deserialize.deserializeBulk((Query.startQuery())));
             foreach (var teacher in teachers) {
                 if (repo.TeacherRepository.Get(teacher.italki_id) == null)
                 {

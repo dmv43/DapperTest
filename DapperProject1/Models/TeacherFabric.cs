@@ -17,9 +17,17 @@ namespace DapperProject1.Models
             for(int i=0; i<t.data.Count; i++)
             {
                 Teacher teacher = new Teacher();
-
-
-                teacher.nickname = t.data[i].nickname;
+               
+                if (t.data[i].nickname.ToCharArray().First() == ' ')
+                {
+                   
+                    teacher.nickname = t.data[i].nickname.TrimStart(' '); ;
+                    
+                }
+                else
+                {
+                    teacher.nickname = t.data[i].nickname;
+                }
                 teacher.italki_url = "www.italki.com/teacher/"+ t.data[i].teacher_info_obj.user_id;
                 teacher.min_price = t.data[i].teacher_info_obj.min_price_usd;
                 teacher.italki_id = t.data[i].teacher_info_obj.user_id;
