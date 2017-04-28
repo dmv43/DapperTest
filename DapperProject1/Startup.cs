@@ -37,6 +37,7 @@ namespace DapperProject1
             string connectionString = "Server=localhost;Database=Italki;Trusted_Connection=True;";
             services.AddTransient<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connectionString));
             services.AddTransient<ITeacherViewFabric, TeacherViewFabric>(provider => new TeacherViewFabric());
+            services.AddTransient<ITeacherFabric, TeacherFabric>(provider => new TeacherFabric());
             // Add framework services.
             services.AddMvc();
 

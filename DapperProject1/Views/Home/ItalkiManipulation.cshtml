@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DapperProject1.Repositories.ITeacherRepository>
+@{
+    ViewData["Title"] = "Teachers";
+
+}
+
+<html>
+<head>
+    <h3>Teachers</h3>
+
+
+
+    <script src="~/jquery.js"></script>
+    <script type="text/javascript">
+        var dataReturn = '';
+
+        function makeRequest(url) {
+            $('#preloader').show();
+            $.get(url, function (data) {
+                $('#resultDiv').html(data);
+                $('#preloader').hide();
+            }).fail(function () {
+                alert('Error occured during requesting the page');
+                $('#preloader').hide();
+            });
+        }
+
+
+
+
+    </script>
+    <style>
+        #preloader {
+            display: none;
+        }
+    </style>
+    </head>
+
+    <body>
+        <div id="preloader"><img src="http://preloaders.net/images/ajax-loader.gif" alt="AJAX loader" title="AJAX loader" /></div>
+        <input type="button" onclick="makeRequest('~/Home/DatabaseManipulation')" value="Send GET request" />
+
+        <div id="resultDiv"></div>
+    </body>
+</html>

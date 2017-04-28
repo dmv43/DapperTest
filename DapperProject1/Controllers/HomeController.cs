@@ -15,12 +15,18 @@ namespace DapperProject1.Controllers
     {
         IUnitOfWork repo ;
         ITeacherViewFabric fab;
-        public HomeController(IUnitOfWork r,ITeacherViewFabric f)
+        ITeacherFabric fabric;
+        public HomeController(IUnitOfWork r,ITeacherViewFabric f,ITeacherFabric fa)
         {
             repo = r;
             fab = f;
+            fabric = fa;
         }
         public IActionResult Index()
+        {
+            return View();
+        }
+        public IActionResult ItalkiManipulation()
         {
             return View();
         }
@@ -134,11 +140,11 @@ namespace DapperProject1.Controllers
 
         public IActionResult DatabaseManipulation()
         {
-            TeacherFabric fabric = new TeacherFabric();
+            
             List<Teacher> teachers;
 
-            teachers = fabric.Build(WorkWithFile.deserialize());
-           // teachers = fabric.Build(Query.startQuery());
+          //  teachers = fabric.Build(WorkWithFile.deserialize());
+            teachers = fabric.Build(Query.startQuery());
             foreach (var teacher in teachers) {
                 if (repo.TeacherRepository.Get(teacher.italki_id) == null)
                 {
