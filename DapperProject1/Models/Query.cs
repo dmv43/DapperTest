@@ -39,7 +39,7 @@ namespace DapperProject1.Models
 
                     i++;
 
-                    int zz = rand.Next(10, 200);
+                    int zz = rand.Next(50, 250);
                     System.Threading.Thread.Sleep(zz);
                  
                    
@@ -64,7 +64,7 @@ namespace DapperProject1.Models
         }
         static HttpResponseMessage getQuery(HttpClient cl, int count)
         {
-            HttpResponseMessage response = cl.GetAsync("https://www.italki.com/api/teachers?_r=1493105167375&country=&hl=uk-UA&i_token=TkRBNE5EQTNNZz09fDE0OTI1OTEwMzB8OTliY2E5MTQzMjM3MWMxM2ViMmFlMTY5ZWI2Zjc3YjAxMzZmMjJjMw%3D%3D&is_instant=&page=" + count + "&price_usd=&speak=&teach=english&teacher_type=1").Result;
+            HttpResponseMessage response = cl.GetAsync("https://www.italki.com/api/teachers?_r=1493365865828&country=&hl=uk-UA&i_token=TkRBNE5EQTNNZz09fDE0OTMzNjIwNTN8Mzc2OGVhNDMzM2Y1MGUyM2Q2MDRhN2Q4MDQxYjUyODk1NzgwNzVmNw%3D%3D&is_instant=&page=" + count + "&price_usd=&speak=&teach=english&teacher_type=1").Result;
             response.EnsureSuccessStatusCode();
             
             return response;

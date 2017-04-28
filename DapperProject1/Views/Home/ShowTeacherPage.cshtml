@@ -1,35 +1,48 @@
 ﻿@model DapperProject1.Models.Teacher
-    @{
-        ViewData["Title"] = "Teacher";
+@{
+    ViewData["Title"] = "Teacher";
+}
+<h1>@Model.nickname</h1>
+
+<h6></h6>
+<td><a href="https://@Model.italki_url">Italki Link</a></td>
+
+
+
+    <h4>Languages</h4>
+    @foreach (var m in Model.languages)
+            {
+        <button type="button" class="btn btn-warning">@m.language</button>
+
     }
-    <h3>Teachers</h3>
-    <table class="table-condensed">
-        <tr>
-            <td>nickname </td>
-            <td>min_price</td>
-            <td>italki_url </td>
-            <td>student_count  </td>
-            <td>session_count  </td>
-            <td>description </td>
-            <td>country </td>
-            <td>rating  </td>
-            
-            
-            <td></td>
-        </tr>
-        
-        
-            <tr>
-                <td>@Model.nickname  </td>
-                <td>@Model.min_price  </td>
-                <td>@Model.italki_url  </td>
-                <td>@Model.student_count  </td>
-                <td>@Model.session_count </td>
-                <td>@Model.description  </td>
-                <td>@Model.country  </td>
-                <td>@Model.rating  </td>
-               
-               
-            </tr>
-        
-    </table>
+    <h5> </h5>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2">
+                <h5>Number of Students:  </h5>
+            </div>
+            <div class="col-lg-1">
+                <button type="button" class="btn btn-info">@Model.student_count</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <h5>Number of Lessons:  </h5>
+            </div>
+            <div class="col-lg-1">
+                <button type="button" class="btn btn-info">@Model.session_count</button>
+            </div>
+        </div>
+    </div>
+    <h5> </h5>
+
+    @foreach (var m in Model.tags)
+    {
+        <button type="button" class="btn btn-default">@m.tag</button>
+
+    }
+
+    <h4>Description</h4>
+    <h5> </h5>
+    <p class="text-left">@Model.description</p>
+

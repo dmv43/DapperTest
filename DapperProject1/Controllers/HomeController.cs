@@ -39,6 +39,7 @@ namespace DapperProject1.Controllers
             ViewBag.id = id;
             
             var teacher = repo.TeacherRepository.Get(id);
+            
             repo.Commit();
             return View(teacher);
         
