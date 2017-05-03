@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  dapperproject1:
+    image: dapperproject1
+    build:
+      context: ./DapperProject1
+      dockerfile: Dockerfile

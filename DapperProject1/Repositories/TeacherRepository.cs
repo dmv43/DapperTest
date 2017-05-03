@@ -65,13 +65,15 @@ namespace DapperProject1.Repositories
             {
                 numberoflang = Connection.ExecuteScalar<int>("SELECT  COUNT (teacher_id) From TeacherLanguage WHERE teacher_id = @id"
                 , param: new { id = teach.id }, transaction: Transaction);
-
+               var langs = Connection.Query<Language>("SELECT  Language.id , Language.language From TeacherLanguage LEFT JOIN Language ON Language.id = TeacherLanguage.language_id WHERE TeacherLanguage.teacher_id = @id", param: new { id = teach.id }, transaction: Transaction);
+               
                 if (numberoflang != 0)
                 {
-                    for (int i = 1; i <= numberoflang; i++)
-                    {
-                        teach.languages.Add(langRep.Get(i));
-                    }
+                    //    for (int i = 1; i <= numberoflang; i++)
+                    //  {
+                    //    teach.languages.Add(langRep.Get(i));
+                    // }
+                    teach.languages.AddRange(langs);
                 }
 
                 int? numberoftag = Connection.ExecuteScalar<int>("SELECT  COUNT (teacher_id) From TeacherTag WHERE teacher_id = @id"
