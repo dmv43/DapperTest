@@ -13,14 +13,14 @@ namespace DapperProject1.Controllers
 {
     public class HomeController : Controller
     {
-        IUnitOfWork repo ;
-        ITeacherViewFabric fab;
-        ITeacherFabric fabric;
+        IUnitOfWork _unitOfWork ;
+        ITeacherViewFabric _teacherViewFabric;
+        ITeacherFabric _teacherFabric;
         public HomeController(IUnitOfWork r,ITeacherViewFabric f,ITeacherFabric fa)
         {
-            repo = r;
-            fab = f;
-            fabric = fa;
+            _unitOfWork = r;
+            _teacherViewFabric = f;
+            _teacherFabric = fa;
         }
         public IActionResult Index()
         {
@@ -34,7 +34,7 @@ namespace DapperProject1.Controllers
         public IActionResult TeacherGrid()
         {
 
-            // return View(repo.TeacherRepository.GetTeachers());
+            // return View(_unitOfWork.TeacherRepository.GetTeachers());
             return View();
          
         }
@@ -44,36 +44,36 @@ namespace DapperProject1.Controllers
         {
             ViewBag.id = id;
             
-            var teacher = repo.TeacherRepository.Get(id);
+            var teacher = _unitOfWork.TeacherRepository.Get(id);
             
-            repo.Commit();
+            _unitOfWork.Commit();
             return View(teacher);
         
         }
         //creating JSON from database data
         public JsonResult GetData(int pageSize, int pageIndex, string sortField ="id", string sortOrder ="asc",string nickname =null )
         {
-            var q = from teach in repo.TeacherRepository.GetTeachers() select teach;
+            var allTeachers = from teach in _unitOfWork.TeacherRepository.GetTeachers() select teach;
 
-            IEnumerable<Teacher> final = GetContext(repo, pageSize, pageIndex, sortField, sortOrder, nickname);
-            var myFinalData = fab.Build(final);
+            IEnumerable<Teacher> final = GetContext(_unitOfWork, pageSize, pageIndex, sortField, sortOrder, nickname);
+            var myFinalData = _teacherViewFabric.Build(final);
 
-            var adata = new {data = myFinalData, itemsCount = q.Count(), pageSize, pageIndex};
+            var adata = new {data = myFinalData, itemsCount = allTeachers.Count(), pageSize, pageIndex};
             
             return Json(adata);
         }
         //-----------paging method------------
-        public IEnumerable<Teacher> GetContext(IUnitOfWork t, int pageSize, int pageIndex, string sortField,string sortOrder,string nickname)
+        public IEnumerable<Teacher> GetContext(IUnitOfWork unitOfWork, int pageSize, int pageIndex, string sortField,string sortOrder,string nickname)
         {
             
             int skipRows = (pageIndex - 1) * pageSize;
-            var q = from teach in t.TeacherRepository.GetTeachers() select teach ;
+            var all_teachers = from teach in unitOfWork.TeacherRepository.GetTeachers() select teach ;
             var param = Expression.Parameter(typeof(Teacher), "x");
             Expression conversion = Expression.Convert(Expression.Property
             (param, sortField), typeof(object));   
 
             //--------------------------
-            foreach(var tea in q)
+            foreach(var tea in all_teachers)
             {
                 if(tea.student_count==0)
                 {
@@ -83,16 +83,16 @@ namespace DapperProject1.Controllers
             //--------------------------
 
             var zz = Expression.Lambda<Func<Teacher, object>>(conversion, param);
-            List<Teacher> y;
+            List<Teacher> paginatedTeachers;
             if (nickname != null)
             {
 
-                y = q.AsQueryable().OrderBy(s => s.nickname).SkipWhile(s => !s.nickname.Contains(nickname)).Take(pageSize).ToList();
-                foreach (var x in q)
+                paginatedTeachers = all_teachers.AsQueryable().OrderBy(s => s.nickname).SkipWhile(s => !s.nickname.Contains(nickname)).Take(pageSize).ToList();
+                foreach (var x in all_teachers)
                 {
                     x.session_to_student = Math.Round((double)x.session_count / x.student_count, 2, MidpointRounding.AwayFromZero);
                 }
-                return y;
+                return paginatedTeachers;
             }
             else
             {
@@ -101,18 +101,18 @@ namespace DapperProject1.Controllers
                     if (sortField == "session_to_student")
                     {
 
-                        y = q.AsQueryable().OrderBy(s => s.session_count / s.student_count).Skip(skipRows).Take(pageSize).ToList();
+                        paginatedTeachers = all_teachers.AsQueryable().OrderBy(s => s.session_count / s.student_count).Skip(skipRows).Take(pageSize).ToList();
 
                     }
                     else
                     {
-                        y = q.AsQueryable().OrderBy(zz).Skip(skipRows).Take(pageSize).ToList();
+                        paginatedTeachers = all_teachers.AsQueryable().OrderBy(zz).Skip(skipRows).Take(pageSize).ToList();
                     }
-                    foreach (var x in q)
+                    foreach (var x in all_teachers)
                     {
                         x.session_to_student = Math.Round((double)x.session_count / x.student_count, 2, MidpointRounding.AwayFromZero);
                     }
-                    return y;
+                    return paginatedTeachers;
 
 
                 }
@@ -120,17 +120,17 @@ namespace DapperProject1.Controllers
                 {
                     if (sortField == "session_to_student")
                     {
-                        y = q.AsQueryable().OrderByDescending(s => s.session_count / s.student_count).Skip(skipRows).Take(pageSize).ToList();
+                        paginatedTeachers = all_teachers.AsQueryable().OrderByDescending(s => s.session_count / s.student_count).Skip(skipRows).Take(pageSize).ToList();
                     }
                     else
                     {
-                        y = q.AsQueryable().OrderByDescending(zz).Skip(skipRows).Take(pageSize).ToList();
+                        paginatedTeachers = all_teachers.AsQueryable().OrderByDescending(zz).Skip(skipRows).Take(pageSize).ToList();
                     }
-                    foreach (var x in y)
+                    foreach (var x in paginatedTeachers)
                     {
                         x.session_to_student = Math.Round((double)x.session_count / x.student_count, 2, MidpointRounding.AwayFromZero);
                     }
-                    return y;
+                    return paginatedTeachers;
 
                 }
             }
@@ -143,19 +143,19 @@ namespace DapperProject1.Controllers
             
             List<Teacher> teachers;
 
-          teachers = fabric.Build(WorkWithFile.deserialize());
-        //    teachers = fabric.Build(Deserialize.deserializeBulk((Query.startQuery())));
+          teachers = _teacherFabric.Build(WorkWithFile.deserialize());
+        //    teachers = _teacherFabric.Build(Deserialize.deserializeBulk((Query.startQuery())));
             foreach (var teacher in teachers) {
-                if (repo.TeacherRepository.Get(teacher.italki_id) == null)
+                if (_unitOfWork.TeacherRepository.Get(teacher.italki_id) == null)
                 {
-                    repo.TeacherRepository.Create(teacher);
+                    _unitOfWork.TeacherRepository.Create(teacher);
                 }
                 else
                 {
-                    repo.TeacherRepository.Update(teacher);
+                    _unitOfWork.TeacherRepository.Update(teacher);
                 }
                     }
-            repo.Commit();
+            _unitOfWork.Commit();
             return View();
         }  
 

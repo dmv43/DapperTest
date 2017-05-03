@@ -69,21 +69,18 @@ namespace DapperProject1.Repositories
                
                 if (numberoflang != 0)
                 {
-                    //    for (int i = 1; i <= numberoflang; i++)
-                    //  {
-                    //    teach.languages.Add(langRep.Get(i));
-                    // }
+           
                     teach.languages.AddRange(langs);
                 }
 
                 int? numberoftag = Connection.ExecuteScalar<int>("SELECT  COUNT (teacher_id) From TeacherTag WHERE teacher_id = @id"
                     , param: new { id = teach.id }, transaction: Transaction);
+                var tags = Connection.Query<Tag>("SELECT  Tag.id , Tag.tag From TeacherTag LEFT JOIN Tag ON Tag.id = TeacherTag.tag_id WHERE TeacherTag.teacher_id = @id", param: new { id = teach.id }, transaction: Transaction);
                 if (numberoftag != 0)
                 {
-                    for (int i = 1; i <= numberoftag; i++)
-                    {
-                        teach.tags.Add(tagRep.Get(i));
-                    }
+                    
+                        teach.tags.AddRange(tags);
+                    
                 }
             }
 
@@ -99,9 +96,7 @@ namespace DapperProject1.Repositories
         {
             if (teacher == null)
                 throw new ArgumentNullException("teacher");
-        //   LanguageRepository langRep = new LanguageRepository(transaction: Transaction);
-        //      TagRepository tagRep = new TagRepository(transaction: Transaction);
-
+        
 
             teacher.id = Connection.Execute("Update Teacher SET nickname = @nickname, italki_url = @italki_url, min_price = @min_price," +
                 " student_count = @student_count, session_count = @session_count" +
@@ -119,18 +114,7 @@ namespace DapperProject1.Repositories
                                 url = teacher.url,
                                 italki_id = teacher.italki_id
                             }, transaction: Transaction);
-       /*     int langid;
-            int tagid;
-            foreach (var lang in teacher.languages)
-            {
-                langid = langRep.Add(lang);
-                Connection.Execute("INSERT INTO TeacherLanguage (teacher_id, language_id) VALUES(@id, @langvid); SELECT SCOPE_IDENTITY()", param: new { id = teacher.id, langvid = langid }, transaction: Transaction);
-            }
-            foreach (var tg in teacher.tags)
-            {
-                tagid = tagRep.Add(tg);
-                Connection.Execute("INSERT INTO TeacherTag (teacher_id, tag_id) VALUES(@teacher_id, @tag_id); SELECT SCOPE_IDENTITY()", param: new { teacher_id = teacher.id, tag_id = tagid }, transaction: Transaction);
-            }  */
+       
         }
     }
 }
