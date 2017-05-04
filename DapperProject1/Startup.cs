@@ -30,14 +30,19 @@ namespace DapperProject1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Entity connection
-            // string connection = Configuration.GetConnectionString("DefaultConnection");
-            //  services.AddDbContext<TeacherContext>(options => options.UseSqlServer(connection));
-           //____________Old Connection___________________________
-            string connectionString = "Server=localhost;Database=Italki;Trusted_Connection=True;";
+            string connectionMaster = "Server=localhost;Database=master;Trusted_Connection=True;";
+            services.AddTransient<IMasterConnection, MasterConnection>(provider => new MasterConnection(connectionMaster));
+            MasterConnection con = new MasterConnection(connectionMaster);
+            con.Execute();
+            con.WriteDB();
+        
+            string connectionString = "Server=localhost;Database="+MasterConnection.GetDatabaseName()+";Trusted_Connection=True;";
             services.AddTransient<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connectionString));
             services.AddTransient<ITeacherViewFabric, TeacherViewFabric>(provider => new TeacherViewFabric());
             services.AddTransient<ITeacherFabric, TeacherFabric>(provider => new TeacherFabric());
+            services.Configure<IISOptions>(options => {
+                options.AutomaticAuthentication = true;
+});
             // Add framework services.
             services.AddMvc();
 

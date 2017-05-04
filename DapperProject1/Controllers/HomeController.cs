@@ -16,18 +16,23 @@ namespace DapperProject1.Controllers
         IUnitOfWork _unitOfWork ;
         ITeacherViewFabric _teacherViewFabric;
         ITeacherFabric _teacherFabric;
-        public HomeController(IUnitOfWork r,ITeacherViewFabric f,ITeacherFabric fa)
+        IMasterConnection _masterConnection;
+        public HomeController(IUnitOfWork r,ITeacherViewFabric f,ITeacherFabric fa, IMasterConnection conn)
         {
+            _masterConnection = conn;
             _unitOfWork = r;
             _teacherViewFabric = f;
             _teacherFabric = fa;
         }
         public IActionResult Index()
         {
+           // _masterConnection.Execute();
             return View();
         }
+       
         public IActionResult ItalkiManipulation()
         {
+            
             return View();
         }
         //main grid page
