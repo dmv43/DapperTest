@@ -30,6 +30,8 @@
     <Content Include="wwwroot\jsgrid-1.5.3\jsgrid.js" />
     <Content Include="wwwroot\jsgrid-1.5.3\jsgrid.min.css" />
     <Content Include="wwwroot\jsgrid-1.5.3\jsgrid.min.js" />
+    <Content Include="Queries\SQLQuery3.sql" />
+    <Content Include="Dockerfile" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.2" />
