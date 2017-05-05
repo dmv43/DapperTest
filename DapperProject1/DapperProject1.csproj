@@ -30,8 +30,8 @@
     <Content Include="wwwroot\jsgrid-1.5.3\jsgrid.js" />
     <Content Include="wwwroot\jsgrid-1.5.3\jsgrid.min.css" />
     <Content Include="wwwroot\jsgrid-1.5.3\jsgrid.min.js" />
-    <Content Include="Queries\SQLQuery3.sql" />
-    <Content Include="Dockerfile" />
+   
+ 
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.2" />
@@ -49,6 +49,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Queries\SQLQuery3.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
