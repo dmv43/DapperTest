@@ -8,8 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using DapperProject1.Models;   // пространство имен моделей
-using Microsoft.EntityFrameworkCore; // пространство имен EntityFramework
+
 using DapperProject1.ViewModels;
+
 
 namespace DapperProject1
 {
@@ -30,13 +31,13 @@ namespace DapperProject1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionMaster = "Server=192.168.0.100,1433;Database=master;User ID=TryUser;Password=335435;";
+            string connectionMaster = "Server=10.130.0.2,1433;Database=master;User ID=TryUser;Password=335435;";
             services.AddTransient<IMasterConnection, MasterConnection>(provider => new MasterConnection(connectionMaster));
             MasterConnection con = new MasterConnection(connectionMaster);
             con.Execute();
             con.WriteDB();
-        
-            string connectionString = "Server=192.168.0.100,1433;Database=" + MasterConnection.GetDatabaseName()+ ";User ID=TryUser;Password=335435;";
+       
+            string connectionString = "Server=10.130.0.2,1433;Database=" + MasterConnection.GetDatabaseName()+ ";User ID=TryUser;Password=335435;";
             services.AddTransient<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connectionString));
             services.AddTransient<ITeacherViewFabric, TeacherViewFabric>(provider => new TeacherViewFabric());
             services.AddTransient<ITeacherFabric, TeacherFabric>(provider => new TeacherFabric());

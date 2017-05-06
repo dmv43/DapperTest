@@ -54,7 +54,7 @@ namespace DapperProject1.Models
 
 
                 } while (check == true);
-                File.WriteAllLines(@"D:\Full_Json_Data4.txt", resultString);
+                File.WriteAllLines(Directory.GetCurrentDirectory() + @"" + Path.DirectorySeparatorChar + "Queries" + Path.DirectorySeparatorChar + "Full_Json_Data4.txt", resultString);
                 // RootObject myObject = Deserialize.deserializeBulk(resultString);
                 //return myObject;
                 return resultString;

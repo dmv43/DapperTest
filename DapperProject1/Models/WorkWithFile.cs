@@ -9,7 +9,7 @@ namespace DapperProject1.Models
     {
         public static RootObject deserialize()
         {
-            var fromFIle = File.ReadAllLines(@"D:\Full_Json_Data4.txt");
+            var fromFIle = File.ReadAllLines(Directory.GetCurrentDirectory() + @"" + Path.DirectorySeparatorChar + "Queries" + Path.DirectorySeparatorChar + "Full_Json_Data4.txt");
                 
             return Deserialize.deserializeBulk(new List<string>(fromFIle));
         }

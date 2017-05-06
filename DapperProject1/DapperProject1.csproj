@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+  <RuntimeFrameworkVersion>1.0.3</RuntimeFrameworkVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -51,7 +52,13 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="app.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Dockerfile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Queries\Full_Json_Data4.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Queries\SQLQuery3.sql">
