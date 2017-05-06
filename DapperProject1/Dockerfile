@@ -1,6 +1,7 @@
-FROM microsoft/aspnetcore:1.1
-ARG source
-WORKDIR /app
+FROM microsoft/dotnet
+ARG source=.
+WORKDIR /DapperProject1
 EXPOSE 80
-COPY ${source:-obj/Docker/publish} .
+EXPOSE 1433
+COPY $source .
 ENTRYPOINT ["dotnet", "DapperProject1.dll"]

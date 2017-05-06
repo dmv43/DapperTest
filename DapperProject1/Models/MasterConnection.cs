@@ -57,7 +57,8 @@ namespace DapperProject1.Models
         }
         public void WriteDB()
         {
-            var a = File.OpenText(Directory.GetCurrentDirectory() + @"\Queries\SQLQuery3.sql");
+            
+             var a = File.OpenText(Directory.GetCurrentDirectory() + @""+Path.DirectorySeparatorChar+ "Queries" + Path.DirectorySeparatorChar + "SQLQuery3.sql");
             SqlCommand command = new SqlCommand();
             string file = a.ReadToEndAsync().Result;
             command.CommandText = "USE " + GetDatabaseName() + ";" + file;
