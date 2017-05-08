@@ -42,8 +42,8 @@ namespace DapperProject1.Models
             
         
             SqlCommand command1 = new SqlCommand();
-            
-            command1.CommandText = "USE [master]; IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = '"+GetDatabaseName()+ "') CREATE DATABASE " + GetDatabaseName() + ";";
+           // USE[master];
+            command1.CommandText = "IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = '"+GetDatabaseName()+ "') CREATE DATABASE " + GetDatabaseName() + ";";
         
             command1.CommandType = CommandType.Text;
             command1.Connection = _connection;
@@ -61,7 +61,8 @@ namespace DapperProject1.Models
              var a = File.OpenText(Directory.GetCurrentDirectory() + @""+Path.DirectorySeparatorChar+ "Queries" + Path.DirectorySeparatorChar + "SQLQuery3.sql");
             SqlCommand command = new SqlCommand();
             string file = a.ReadToEndAsync().Result;
-            command.CommandText = "USE " + GetDatabaseName() + ";" + file;
+            // "USE " + GetDatabaseName() + ";" +
+            command.CommandText =  file;
 
             command.CommandType = CommandType.Text;
             command.Connection = _connection;

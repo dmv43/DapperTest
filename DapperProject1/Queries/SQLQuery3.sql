@@ -25,7 +25,7 @@ ADD CONSTRAINT PK_Teacher  PRIMARY KEY  (id )  ;
 IF NOT EXISTS (SELECT * FROM sys.objects 
 		WHERE object_id = OBJECT_ID(N'[Language]') 
 		AND type in (N'U'))
-	CREATE TABLE [Language](
+	CREATE TABLE [Language] (
 	 [id] [int] IDENTITY (1 , 1),
      [language] [nvarchar](50) NOT NULL,
 	)
@@ -35,18 +35,14 @@ ADD CONSTRAINT PK_Language PRIMARY KEY (id);
 IF NOT EXISTS (SELECT * FROM sys.objects 
 		WHERE object_id = OBJECT_ID(N'[Tag]') 
 		AND type in (N'U'))
-     CREATE TABLE [Tag](
+     CREATE TABLE Tag(
 	 [id] [int] IDENTITY (1 , 1),
      [tag] [nvarchar](50) NOT NULL,
 	)
-	IF NOT EXISTS (SELECT * FROM sys.objects 
-		WHERE object_id = OBJECT_ID(N'[Tag]') 
-		AND type in (N'U'))
+	
 	ALTER TABLE Tag
-ADD CONSTRAINT PK_Tag  PRIMARY KEY  (id )  ;
-IF NOT EXISTS (SELECT * FROM sys.objects 
-		WHERE object_id = OBJECT_ID(N'[TeacherLanguage]') 
-		AND type in (N'U'))
+ADD CONSTRAINT PK_Tag  PRIMARY KEY  (id)  ;
+
 	CREATE TABLE TeacherLanguage(
 	 [teacher_id] [int] NOT NULL,
 	 [language_id] [int] NOT NULL,

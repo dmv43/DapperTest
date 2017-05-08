@@ -51,9 +51,6 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="app.yaml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Dockerfile">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
