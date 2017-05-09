@@ -23,7 +23,7 @@ namespace DapperProject1.Repositories
             : base(transaction)
         {
         }
-        string connectionString = null;
+       // string connectionString = null;
 
         public int Add(Language language)
         {
